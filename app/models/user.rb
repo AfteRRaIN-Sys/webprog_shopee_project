@@ -9,7 +9,10 @@ class User < ApplicationRecord
 	validates :gender, presence: true
 	#validates :birthday
 
+	#association
+	has_one :bucket
 
+	#password
 	has_secure_password
 
 end
