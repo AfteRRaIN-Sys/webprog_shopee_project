@@ -1,0 +1,45 @@
+-#===========navbar=============
+%nav.navbar.navbar-expand-lg{style: "background-color: #e3f2fd;"}
+	.container{class: " container-md"}
+		%a.navbar-brand{href: "/user/main"}
+			- src = "https://findicons.com/files/icons/2718/pretty_office_icon_set_part_11/512/shop.png"
+			- title = "StoreManager"
+			- if session[:alt] == "user"
+				- src = "https://64.media.tumblr.com/4fccec67d9051ec53d5c6f222bc5706e/5f05b5f8883fd972-ea/s500x750/abf09bfa4afe3b50778d96a7ec9b7f3dcdaa9260.png"
+				- title = "Shopee"
+			%img.p-1{alt: "", height: "75", width: "75", src: src}#{title}
+		-if session[:user_id] != nil
+			#navbarNav.collapse.navbar-collapse
+				%ul.navbar-nav
+					%li.nav-item.active
+						%a.nav-link{href: "/user/main"} Home
+						-#%a.nav-link.disabled{href: "#"} Disabled
+					%li.nav-item.dropdown
+						%a#navbarDropdownMenuLink.nav-link.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", href: "#", role: "button"}
+							About User
+						%ul.dropdown-menu{"aria-labelledby" => "navbarDropdownMenuLink"}
+							%li
+								%a.dropdown-item{href: users_path} Users
+			%form.d-flex{action: "/search", method: "get"}
+				%input#fname.form-control.me-2{name: "name", type: "text"}
+				%button.btn.btn-outline-success{type: "submit"} Search
+			.p-2
+				%a{href: "/userlogin"}
+					=button_tag "Logout", class: "btn btn-outline-danger"
+		-elsif session[:store_id] != nil
+			#navbarNav.collapse.navbar-collapse
+				%ul.navbar-nav
+					%li.nav-item.active
+						%a.nav-link{href: "/store/main"} Home
+						-#%a.nav-link.disabled{href: "#"} Disabled
+					%li.nav-item.dropdown
+						%a#navbarDropdownMenuLink.nav-link.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", href: "#", role: "button"}
+							About Store
+						%ul.dropdown-menu{"aria-labelledby" => "navbarDropdownMenuLink"}
+							%li
+								%a.dropdown-item{href: stores_path} Stores
+			.p-2
+				%a{href: "/storelogin"}
+					=button_tag "Logout", class: "btn btn-outline-danger"
+
+-#===========end navbar=============

@@ -1,0 +1,22 @@
+=simple_form_for(Store.new, as: :store, method: :post, url: :storelogin) do |f|	#add your config here!!!!!!!
+	= f.error_notification
+	= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+	.form-inputs
+		.row
+			.col-md-6.col-12
+			= f.input :storeName
+			.col-md-6.col-12
+			= f.input :password
+    
+	%br
+
+	.row
+		.col-1
+			.form_action
+				= f.button :submit, value: :Login, class: "btn btn-primary", data: {disable_with: "Logging.."} #default value = "create user"
+		.col-1
+			%a{href: "/stores/new"}
+				=button_tag "Register", class: "btn btn-primary"
+				
+	-#button = button_to "Follow", follow_user_path , method: "POST"

@@ -1,0 +1,25 @@
+%h1 Listing stores
+
+%table
+  %thead
+    %tr
+      %th Storename
+      %th Password digest
+      %th Address
+      %th
+      %th
+      %th
+
+  %tbody
+    - @stores.each do |store|
+      %tr
+        %td= store.storeName
+        %td= store.password_digest
+        %td= store.address
+        %td= link_to 'Show', store
+        %td= link_to 'Edit', edit_store_path(store)
+        %td= link_to 'Destroy', store, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Store', new_store_path
