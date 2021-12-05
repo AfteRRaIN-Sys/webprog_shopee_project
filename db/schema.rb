@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_05_110303) do
+ActiveRecord::Schema.define(version: 2021_12_05_135524) do
 
   create_table "buckets", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -69,6 +69,15 @@ ActiveRecord::Schema.define(version: 2021_12_05_110303) do
     t.index ["tag_id"], name: "index_items_tags_on_tag_id"
   end
 
+  create_table "order_line_items", force: :cascade do |t|
+    t.integer "order_id", null: false
+    t.integer "item_id", null: false
+    t.integer "quantity"
+    t.float "sold_price"
+    t.index ["item_id"], name: "index_order_line_items_on_item_id"
+    t.index ["order_id"], name: "index_order_line_items_on_order_id"
+  end
+
   create_table "orders", force: :cascade do |t|
     t.integer "user_id", null: false
     t.datetime "purchased_time"
@@ -119,6 +128,8 @@ ActiveRecord::Schema.define(version: 2021_12_05_110303) do
   add_foreign_key "item_on_buckets", "buckets"
   add_foreign_key "item_on_buckets", "items"
   add_foreign_key "items", "stores"
+  add_foreign_key "order_line_items", "items"
+  add_foreign_key "order_line_items", "orders"
   add_foreign_key "orders", "users"
   add_foreign_key "ratings", "stores"
   add_foreign_key "ratings", "users"

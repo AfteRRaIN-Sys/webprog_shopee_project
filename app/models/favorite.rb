@@ -1,6 +1,6 @@
 class Favorite < ApplicationRecord
   
-  #ASSOC
+  #assoc
   belongs_to :user
   belongs_to :store
 end

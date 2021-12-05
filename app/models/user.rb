@@ -16,7 +16,6 @@ class User < ApplicationRecord
 	has_many :rated_stores, through: :ratings, source: :store #source : "store" in rating
 
 	has_many :orders
-	#has_many :order_line_items, through: :orders
 
 	has_many :favorites
 	has_many :favorite_stores, through: :favorites, source: :store
