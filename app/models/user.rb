@@ -12,14 +12,14 @@ class User < ApplicationRecord
 	#association
 	has_one :bucket
 
-	#has_many :ratings
-	#has_many :rated_stores, through: :ratings, inverse_of: "rater"
+	has_many :ratings
+	has_many :rated_stores, through: :ratings, source: :store #source : "store" in rating
 
-	#has_many :orders
+	has_many :orders
 	#has_many :order_line_items, through: :orders
 
-	#has_many :favorites
-	#has_many :favorite_stores, through: :favorites, inverse_of: "favor_user"
+	has_many :favorites
+	has_many :favorite_stores, through: :favorites, source: :store
 
 	#password
 	has_secure_password

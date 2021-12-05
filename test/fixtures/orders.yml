@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  purchased_time: 2021-12-05 18:03:03
+
+two:
+  user: two
+  purchased_time: 2021-12-05 18:03:03
