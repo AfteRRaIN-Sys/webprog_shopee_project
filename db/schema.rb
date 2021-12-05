@@ -10,13 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_04_145304) do
+ActiveRecord::Schema.define(version: 2021_12_05_002417) do
 
   create_table "buckets", force: :cascade do |t|
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_buckets_on_user_id"
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.integer "store_id", null: false
+    t.string "name"
+    t.float "price"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["store_id"], name: "index_items_on_store_id"
   end
 
   create_table "stores", force: :cascade do |t|
@@ -41,4 +51,5 @@ ActiveRecord::Schema.define(version: 2021_12_04_145304) do
   end
 
   add_foreign_key "buckets", "users"
+  add_foreign_key "items", "stores"
 end
