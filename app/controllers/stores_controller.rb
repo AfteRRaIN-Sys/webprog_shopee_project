@@ -1,7 +1,9 @@
 class StoresController < ApplicationController
   before_action :is_logged_in, except: %i[new create]
   before_action :set_alt, except: %i[]
+
   before_action :set_store, only: %i[ show edit update destroy ]
+  before_action :is_same_acc, only: %i[ edit update destroy ]
 
   # GET /stores or /stores.json
   def index
@@ -24,16 +26,12 @@ class StoresController < ApplicationController
   # POST /stores or /stores.json
   def create
     @store = Store.new(store_params)
-
-    respond_to do |format|
-      if @store.save
-        format.html { redirect_to @store, notice: "Store was successfully created." }
-        format.json { render :show, status: :created, location: @store }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @store.errors, status: :unprocessable_entity }
-      end
+    if @store.save
+      flash[:notice] = "Store was successfully created."
+    else
+      flash[:error] = "Found an error while creating account."
     end
+    redirect_to :storelogin
   end
 
   # PATCH/PUT /stores/1 or /stores/1.json
@@ -51,15 +49,68 @@ class StoresController < ApplicationController
 
   # DELETE /stores/1 or /stores/1.json
   def destroy
-    @store.destroy
-    respond_to do |format|
-      format.html { redirect_to stores_url, notice: "Store was successfully destroyed." }
-      format.json { head :no_content }
+    if is_same_acc
+      @store.destroy
+      respond_to do |format|
+        format.html { redirect_to :storelogin, notice: "Store was successfully destroyed." }
+        format.json { head :no_content }
+      end
     end
   end
 
+  #custom define --------------------------------------------
+  
+  def main
+    render "store_pages/main"
+  end
+
+  def addItem
+    @item = Item.new
+    render "store_pages/addItem"
+  end
+
+  def checkAddItem
+    #login_user = params[:user] #simple form pass "user = {email:"", password:""} to this func"
+    #{"name"=>"Item2", "price"=>"99", "description"=>"Test Item"}
+    #Item.create(store_id: 2, name: "test3", price: 20.0, description: "testing")
+    #"item"=>{"name"=>"testItem", "price"=>"99", "description"=>"just mock", "tag_ids"=>"comic fun haha"}
+
+    new_item_detail = params[:item]
+    puts "----------item detail #{new_item_detail}"
+
+    #only keep name in lowercase
+    tmp = Item.find_by(store_id: getCurrentSID,name: new_item_detail[:name].downcase)
+
+    if tmp != nil
+      flash[:error] = "Your store are already selling this product!"
+    else
+      @item = Item.new(store_id: getCurrentSID(), name: new_item_detail[:name].downcase, price: new_item_detail[:price], description: new_item_detail[:description])
+      if @item.save
+        res = @item.addItemTag(params[:item][:tag_ids])
+        if res 
+          flash[:success] = "Add Item #{new_item_detail[:name]} successfully!!"
+        end
+      else
+        flash[:error] = "Save Item Unsuccess"
+      end
+    end
+    
+    returnToStoreMain
+
+  end
+
+  #end custom define --------------------------------------------
+
   private
     # Use callbacks to share common setup or constraints between actions.
+
+    def checkRedundantName(a,b)
+      if (a.downcase == b.downcase) 
+        return true
+      end
+      return false
+    end
+
     def set_store
       @store = Store.find(params[:id])
     end
@@ -70,6 +121,15 @@ class StoresController < ApplicationController
     end
 
     #custom define --------------------------------------------
+
+    def getCurrentSID
+      return session[:store_id]
+    end
+
+    def returnToStoreMain
+      redirect_to :storemain
+    end
+
     def is_logged_in
       if (session[:store_id] != nil)
         @store = Store.find(session[:store_id])
@@ -80,8 +140,11 @@ class StoresController < ApplicationController
     end
 
     def is_same_acc
+      puts "-------------------------#{@store.id}"
       if (@store.id == nil || session[:store_id] == nil || session[:store_id] != @store.id)
-        return false;
+        flash[:error] = "Unauthorized action!"
+        redirect_to :storemain
+        #return false;
       else 
         return true
       end

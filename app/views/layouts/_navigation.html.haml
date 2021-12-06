@@ -1,7 +1,10 @@
 -#===========navbar=============
 %nav.navbar.navbar-expand-lg{style: "background-color: #e3f2fd;"}
 	.container{class: " container-md"}
-		%a.navbar-brand{href: "/user/main"}
+		- icon_link = "/storemain"
+		- if session[:alt] == "user"
+			- icon_link = "/usermain"
+		%a.navbar-brand{href: "#{icon_link}"}
 			- src = "https://findicons.com/files/icons/2718/pretty_office_icon_set_part_11/512/shop.png"
 			- title = "StoreManager"
 			- if session[:alt] == "user"
@@ -12,7 +15,7 @@
 			#navbarNav.collapse.navbar-collapse
 				%ul.navbar-nav
 					%li.nav-item.active
-						%a.nav-link{href: "/user/main"} Home
+						%a.nav-link{href: "#{icon_link}"} Home
 						-#%a.nav-link.disabled{href: "#"} Disabled
 					%li.nav-item.dropdown
 						%a#navbarDropdownMenuLink.nav-link.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", href: "#", role: "button"}
@@ -30,7 +33,7 @@
 			#navbarNav.collapse.navbar-collapse
 				%ul.navbar-nav
 					%li.nav-item.active
-						%a.nav-link{href: "/store/main"} Home
+						%a.nav-link{href: "#{icon_link}"} Home
 						-#%a.nav-link.disabled{href: "#"} Disabled
 					%li.nav-item.dropdown
 						%a#navbarDropdownMenuLink.nav-link.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", href: "#", role: "button"}

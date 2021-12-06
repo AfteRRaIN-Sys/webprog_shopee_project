@@ -1,0 +1,18 @@
+-# frozen_string_literal: true
+=simple_form_for(Item.new, as: :item, method: :post, url: :add_item) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+  .container
+    .form-inputs
+      .row
+        = f.input :name
+      .row
+        = f.input :price
+      .row
+        = f.input :description
+      .row
+        = f.association :tags, as: :string
+
+    %br
+    .form-actions
+      = f.button :submit, class: "btn btn-success"

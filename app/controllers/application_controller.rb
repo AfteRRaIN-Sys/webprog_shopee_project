@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
 	      @store = exist_store
 	      puts "-----------------------------login as #{@store.storeName}"
 	      puts "-----------------------------login as #{session[:store_id]}"
-	      redirect_to :stores
+	      redirect_to :storemain
 	    else 
 	      flash[:alert] = "Wrong StoreName or Password!!"
 	      redirect_to :storelogin

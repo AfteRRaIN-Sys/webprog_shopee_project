@@ -1,0 +1,56 @@
+- c_store = Store.find(session[:store_id])
+%h1{class: "fst-italic fs-1"}= "Welcome to Store Manager #{c_store.storeName}"
+
+%table{class: "table"}
+	%thead
+		%tr
+			%th Image
+			%th ItemName
+			%th Price
+			%th Sold
+			%th Edit
+			%th Remove
+
+
+	%tbody
+		- items = c_store.getAllItems(c_store.id)
+		- items.each do |i|
+			%tr
+				%td
+					%img.p-1{alt: "", height: "75", width: "75", src: "https://image.api.playstation.com/cdn/UP4774/CUSA13222_00/SrNl2EYavo9xEIieLrrxDp3hSCX8QGWW.png"}
+				%td= i.name
+				%td= i.price
+				%td= c_store.getSold(i.id)
+				%td= 0
+				%td= 0
+
+
+
+		
+
+=# render "layouts/show_likes_modal"
+
+%p
+	%a{href: :add_item}
+		=button_tag "Add New Item", class: "btn btn-primary"
+
+
+:javascript
+	$(".like_btn").click(function(){
+	
+		var str = $(this).attr("users");
+		var arr = str.split(",")
+
+		tbody = $("#s1")
+		tbody.empty()
+		for (let i = 0; i < arr.length; i++) {
+			if (str.length===0) { break; }
+			tbody.append("<tr><td>"+arr[i]+"</td>\n"+"<td><a class=\"d-grid gap-2 mx-auto btn btn-outline-info btn-sm\" href=\"/profile/" + arr[i] + "\">" + "Visit Profile" + "</a></td></tr>");
+		}
+
+		//display
+		var myModal = new bootstrap.Modal(document.getElementById('like_modal'), {});
+		myModal.show();
+
+
+	})

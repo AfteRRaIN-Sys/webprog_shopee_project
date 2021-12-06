@@ -12,9 +12,15 @@ Rails.application.routes.draw do
   #end users -------------------------------------------------------------------------------
 
   # stores -------------------------------------------------------------------------------
+  
   get "/storelogin", to: "application#storeLoginPage"
   #login
   post "/storelogin", to: "application#storeLogin"
-  get "/stores/main", to: "stores#main"
+  get "/storemain", to: "stores#main"
+
+  get "/add_item", to: "stores#addItem"
+  post "/add_item", to: "stores#checkAddItem"
+
+
   # end stores -------------------------------------------------------------------------------
 end

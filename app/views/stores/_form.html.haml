@@ -2,16 +2,16 @@
 = simple_form_for(@store) do |f|
   = f.error_notification
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
-
-  .form-inputs
-    .row
-      .col-md-6.col-12
-        = f.input :storeName
-    .row
-      = f.input :password
-    .row
-      = f.input :address
-  %br
-  .form-actions
-    = f.button :submit, class: "btn btn-success"
+  .container
+    .form-inputs
+      .row
+        .col-md-6.col-12
+          = f.input :storeName
+      .row
+        = f.input :password
+      .row
+        = f.input :address
+    %br
+    .form-actions
+      = f.button :submit, class: "btn btn-success"
 
