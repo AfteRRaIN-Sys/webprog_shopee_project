@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_action :is_logged_in, except: %i[create new]
   before_action :set_user, only: %i[ show edit update destroy ]
   before_action :set_alt, except: %i[]
+  before_action :is_same_acc, only: %i[edit update delete]
 
   # GET /users or /users.json
   def index
@@ -59,6 +60,17 @@ class UsersController < ApplicationController
     end
   end
 
+  #custom define ---------------------------------------------------------------------------------------
+  def main
+    if is_same_acc
+      @fav_items = @user.getAllItemFromFavorites
+      puts "-------------------fav item #{@fav_items}"
+      render "/user_pages/main"
+    end
+  end
+
+  #end custom define ---------------------------------------------------------------------------------------
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -82,7 +94,9 @@ class UsersController < ApplicationController
 
     def is_same_acc
       if (@user.id == nil || session[:user_id] == nil || session[:user_id] != @user.id)
-        return false;
+        flash[:error] = "Unauthorized action!!"
+        redirect_to :usermain
+        #return false;
       else 
         return true
       end

@@ -23,4 +23,15 @@ class User < ApplicationRecord
 	#password
 	has_secure_password
 
+	def getAllItemFromFavorites
+		#version1
+		arr = []
+		self.favorite_stores.each do |f|
+			arr = arr+f.items
+		end
+
+		return arr
+
+		#v2 must sort by, group by tag
+	end
 end

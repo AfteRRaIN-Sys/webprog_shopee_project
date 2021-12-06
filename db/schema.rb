@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_05_135524) do
+ActiveRecord::Schema.define(version: 2021_12_06_083255) do
 
   create_table "buckets", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 2021_12_05_135524) do
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "img_src"
     t.index ["store_id"], name: "index_items_on_store_id"
   end
 

@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
 	      @user = exist_user
 	      #puts "-----------------------------login as #{@user.name}"
 	      #puts "-----------------------------login as #{session[:user_id]}"
-	      redirect_to "/users"
+	      redirect_to :usermain
 	    else 
 	      flash[:alert] = "Wrong Email or Password!!"
 	      redirect_to :userlogin

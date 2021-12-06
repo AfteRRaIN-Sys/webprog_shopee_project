@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get "/userlogin", to: "application#userLoginPage"
   #login
   post "/userlogin", to: "application#userLogin"
-  get "/users/main", to: "users#main"
+  get "/usermain", to: "users#main"
   #end users -------------------------------------------------------------------------------
 
   # stores -------------------------------------------------------------------------------
