@@ -21,7 +21,7 @@ class Store < ApplicationRecord
 	end
 
 	def getSold(iid)
-		quantity = OrderLineItem.where(item_id: iid).pluck ('quantity')
+		quantity = OrderLineItem.where(item_id: iid).pluck('quantity')
 		#puts "-------------quantity #{quantity}"
 		return quantity.sum
 	end

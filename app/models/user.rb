@@ -33,5 +33,11 @@ class User < ApplicationRecord
 		return arr
 
 		#v2 must sort by, group by tag
+		
+	end
+
+	def clearBucket
+		b = self.bucket
+		b.clearBucket
 	end
 end

@@ -9,6 +9,10 @@ Rails.application.routes.draw do
   #login
   post "/userlogin", to: "application#userLogin"
   get "/usermain", to: "users#main"
+
+  get "/add_item_to_bucket/:added_item_id", to: "users#addItemToBucket"
+  
+
   #end users -------------------------------------------------------------------------------
 
   # stores -------------------------------------------------------------------------------
