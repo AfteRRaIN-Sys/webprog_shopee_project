@@ -18,6 +18,10 @@ Rails.application.routes.draw do
   get "/delete_from_favorite/:store_id", to: "users#deleteStoreFromFavorite"
 
   get "/purchase", to: "users#purchase"
+
+  get "/confirmed_purchased", to: "users#confirmPurchase"
+
+  get "/showOrder", to: "users#showOrder"
   
 
   #end users -------------------------------------------------------------------------------

@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
   before_action :set_alt, except: %i[]
   before_action :is_same_acc, only: %i[edit update delete]
+  before_action :cancelPurchaseSession, except: %i[confirmPurchase]
 
   # GET /users or /users.json
   def index
@@ -112,9 +113,31 @@ class UsersController < ApplicationController
   end
 
   def purchase
-    @total = @user.bucket.getTotalPayment
+    b = @user.bucket
+    @total = b.getTotalPayment
     puts "-------------#{@total}"
+    setPurchaseSession
     render "/user_pages/purchasePage"
+  end
+
+  def confirmPurchase
+    if session[:purchase] == 1
+      b = @user.bucket
+      @total = b.getTotalPayment
+      puts "-------------#{@total}"
+      o = Order.new
+      res = o.moveBucketToOrder(@user.id, b.id)
+      if res
+        @user.clearBucket
+        flash[:success] = "Thank you for Shopping, You spend #{@total} Baht. Your Order will be arrived soon!!"
+      else
+        flash[:error] = "Purchase Unsuccessfull, Please try again!"
+      end
+      cancelPurchaseSession
+    else
+      flash[:error] = "Please go through purchase page in store!!"
+    end
+    returnToUserMain
   end
 
   #end custom define ---------------------------------------------------------------------------------------
@@ -153,6 +176,14 @@ class UsersController < ApplicationController
     def set_alt
       session[:alt] = "user"
     end
+
+    def setPurchaseSession
+      session[:purchase] = 1
+    end
+
+    def cancelPurchaseSession
+      session[:purchase] = 0
+    end    
 
     def returnToUserMain
       redirect_to :usermain
