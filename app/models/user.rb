@@ -36,6 +36,11 @@ class User < ApplicationRecord
 		
 	end
 
+	def getAllItemFromBucket
+		#version1
+		return self.bucket.getAllItemFromBucket
+	end
+
 	def clearBucket
 		b = self.bucket
 		b.clearBucket

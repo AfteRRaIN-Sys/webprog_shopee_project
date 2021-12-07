@@ -1,0 +1,21 @@
+%h2="Shopping Cart"
+-# .dog => <div class="dog"></div>
+.container.p-2
+	%table
+		%thead
+			%tr
+				%th Image
+				%th Item Name
+				%th Price
+				%th Quantity
+		%tbody
+			-@user.getAllItemFromBucket.each do |ib|
+				-i = ib.item
+				%tr
+					%td
+						%img.p-1{alt: "", height: "75", width: "75", src: i.img_src}
+					%td= i.name
+					%td= i.price
+					%td= ib.quantity
+
+%a.p-2{class: "link-dark btn btn-success", href: "/purchase", type: "button"}Purchase

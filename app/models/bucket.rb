@@ -11,12 +11,29 @@ class Bucket < ApplicationRecord
   def clearBucket
     ids = ItemOnBucket.where(bucket_id: self.id).pluck("id")
     puts "--------------#{ids.to_a}"
-    #ItemOnBucket.delete(ids)
+    ItemOnBucket.delete(ids)
+  end
+
+  #OrderLineItem.where(item_id: iid).pluck('quantity')
+  def getCurrentStoreFromBucket
+    puts "-----------------get sid from bucket"
+    sid = self.items[0].store_id
+    puts "-------------------#{sid}"
+    return sid
+  end
+
+  def checkBucketItemToStore(store_id)
+    if self.items.size != 0 && self.getCurrentStoreFromBucket != store_id
+      self.clearBucket 
+    end
   end
 
   def addItemToBucket(item_id)
     puts "--------add item to bucket"
     i = Item.find_by(id: item_id)
+
+    checkBucketItemToStore(i.store_id)
+
     if i != nil
       ib = ItemOnBucket.find_by(bucket_id: self.id, item_id: item_id)
       if ib != nil
@@ -28,8 +45,14 @@ class Bucket < ApplicationRecord
       end
       return ib.save
     end
+    
     return false
+
   end
 
+  def getAllItemFromBucket
+    #version1
+    return self.item_on_buckets
+  end
 
 end

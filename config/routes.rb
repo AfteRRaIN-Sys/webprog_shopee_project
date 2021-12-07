@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get "/usermain", to: "users#main"
 
   get "/add_item_to_bucket/:added_item_id", to: "users#addItemToBucket"
+
+  get "/visitStore/:store_id", to: "users#visitStore"
   
 
   #end users -------------------------------------------------------------------------------

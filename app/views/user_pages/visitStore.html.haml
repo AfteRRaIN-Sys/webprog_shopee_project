@@ -1,0 +1,10 @@
+
+%h1{class: "fst-italic fs-1"}= "Welcome to \"#{@store.storeName}\""
+.container.p-2
+	.row
+		.col
+			.container
+				= render "/user_pages/itemList"
+		.col
+			.container
+				= render "/user_pages/bucket"

@@ -63,9 +63,9 @@ class UsersController < ApplicationController
   #custom define ---------------------------------------------------------------------------------------
   def main
     if is_same_acc
+      @user.clearBucket
       @fav_items = @user.getAllItemFromFavorites
       puts "-------------------fav item #{@fav_items}"
-      @user.clearBucket
       render "/user_pages/main"
     end
   end
@@ -81,10 +81,16 @@ class UsersController < ApplicationController
     else
       flash[:success] = "Added Item to Your Bucket"
       #to store
-      store_name = Item.find(tmp).store.storeName
-      #redirect_to: "/visitStore/Item.find(store_name)"
-      returnToUserMain
+      sid = Item.find(tmp).store.id
+      redirect_to "/visitStore/#{sid}"
     end
+  end
+
+  def visitStore
+    tmp = params[:store_id].to_i
+    @user.bucket.checkBucketItemToStore(tmp)
+    @store = Store.find_by(id: tmp)
+    render "/user_pages/visitStore"
   end
 
   #end custom define ---------------------------------------------------------------------------------------

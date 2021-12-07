@@ -35,5 +35,10 @@ class Item < ApplicationRecord
     return true
   end
 
+  def getPlusIcon
+    #return "http://cdn.onlinewebfonts.com/svg/img_51677.png"
+    return "https://cdn1.iconfinder.com/data/icons/ui-colored-1/100/UI__2-512.png"
+  end
+
 
 end
