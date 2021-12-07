@@ -23,6 +23,30 @@ class User < ApplicationRecord
 	#password
 	has_secure_password
 
+	def isAlreadyAdd(store_id)
+    	f = Favorite.where(store_id: store_id, user_id: self.id).to_a
+    	puts "------------------isAlreadyAdd #{f}"
+    	return f.size != 0
+  	end
+
+	def addToFavorite(store_id)
+		if self.isAlreadyAdd(store_id) == false
+			f = Favorite.new(store_id: store_id, user_id: self.id)
+			return f.save
+		end
+		return false
+
+	end
+
+	def removeFromFavorite(store_id)
+		if self.isAlreadyAdd(store_id)
+			f = Favorite.find_by(user_id: self.id, store_id: store_id)
+			f.delete
+			return true
+		end
+		return false
+	end
+
 	def getAllItemFromFavorites
 		#version1
 		arr = []
@@ -34,6 +58,11 @@ class User < ApplicationRecord
 
 		#v2 must sort by, group by tag
 		
+	end
+
+	def createNewBucket
+		b = Bucket.new(user_id: self.id)
+		return b.save
 	end
 
 	def getAllItemFromBucket

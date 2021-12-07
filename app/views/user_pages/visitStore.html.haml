@@ -1,10 +1,17 @@
-
-%h1{class: "fst-italic fs-1"}= "Welcome to \"#{@store.storeName}\""
 .container.p-2
 	.row
 		.col
-			.container
+			%h1{class: "fst-italic fs-1"}= "Welcome to \"#{@store.storeName}\""
+		- if @user.isAlreadyAdd(@store.id)
+			.col-2
+				%a.p-2{class: "link-dark btn btn-outline-danger", href: "/delete_from_favorite/#{@store.id}", type: "button"}Delete from Favorite
+		-else 
+			.col-2
+				%a.p-2{class: "link-dark btn btn-primary", href: "/add_to_favorite/#{@store.id}", type: "button"}Add To Favorite
+	.row
+		.col
+			.container.p-1
 				= render "/user_pages/itemList"
 		.col
-			.container
+			.container.p-1
 				= render "/user_pages/bucket"

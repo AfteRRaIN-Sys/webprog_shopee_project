@@ -13,6 +13,11 @@ Rails.application.routes.draw do
   get "/add_item_to_bucket/:added_item_id", to: "users#addItemToBucket"
 
   get "/visitStore/:store_id", to: "users#visitStore"
+
+  get "/add_to_favorite/:store_id", to: "users#addStoreToFavorite"
+  get "/delete_from_favorite/:store_id", to: "users#deleteStoreFromFavorite"
+
+  get "/purchase", to: "users#purchase"
   
 
   #end users -------------------------------------------------------------------------------

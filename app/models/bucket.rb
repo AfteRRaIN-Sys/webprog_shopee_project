@@ -55,4 +55,8 @@ class Bucket < ApplicationRecord
     return self.item_on_buckets
   end
 
+  def getTotalPayment
+    return ItemOnBucket.connection.select_all("SELECT sum(quantity*price) as total FROM item_on_buckets IB INNER JOIN items I ON Ib.item_id = I.id and Ib.bucket_id = #{self.id}").pluck("total")[0]
+  end
+
 end

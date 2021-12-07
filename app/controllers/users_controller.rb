@@ -28,7 +28,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     respond_to do |format|
-      if @user.save
+      if @user.save && @user.createNewBucket
         format.html { redirect_to @user, notice: "User was successfully created." }
         format.json { render :show, status: :created, location: @user }
       else
@@ -91,6 +91,30 @@ class UsersController < ApplicationController
     @user.bucket.checkBucketItemToStore(tmp)
     @store = Store.find_by(id: tmp)
     render "/user_pages/visitStore"
+  end
+
+  def addStoreToFavorite
+    store_id = params[:store_id].to_i
+    res = @user.addToFavorite(store_id)
+    if res = false
+      flash[:error] = "You already added this store to favorite"
+    end
+    redirect_to "/visitStore/#{store_id}"
+  end
+
+  def deleteStoreFromFavorite
+    store_id = params[:store_id].to_i
+    res = @user.removeFromFavorite(store_id)
+    if res == false
+      flash[:error] = "This store is not yet on your favorite"
+    end
+    redirect_to "/visitStore/#{store_id}"
+  end
+
+  def purchase
+    @total = @user.bucket.getTotalPayment
+    puts "-------------#{@total}"
+    render "/user_pages/purchasePage"
   end
 
   #end custom define ---------------------------------------------------------------------------------------
