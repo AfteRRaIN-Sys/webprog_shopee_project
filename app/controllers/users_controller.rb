@@ -1,9 +1,11 @@
 class UsersController < ApplicationController
   
   before_action :is_logged_in, except: %i[create new]
-  before_action :set_user, only: %i[ show edit update destroy ]
   before_action :set_alt, except: %i[]
+
+  before_action :set_user, only: %i[main show edit update destroy ]
   before_action :is_same_acc, only: %i[show edit update delete]
+
   before_action :checkIsAdmin, only: %i[index]
   before_action :cancelPurchaseSession, except: %i[confirmPurchase]
 
@@ -64,7 +66,7 @@ class UsersController < ApplicationController
 
   #custom define ---------------------------------------------------------------------------------------
   def main
-    if is_same_acc
+    if is_logged_in
       @user.clearBucket
       @fav_items = @user.getAllItemFromFavorites
       puts "-------------------fav item #{@fav_items}"
@@ -167,7 +169,9 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      if is_logged_in
+        @user = User.find(session[:user_id])
+      end
     end
 
     # Only allow a list of trusted parameters through.
@@ -182,14 +186,15 @@ class UsersController < ApplicationController
         return true;
       else 
         redirect_to :userlogin, notice: "Please Login"
+        return false
       end
     end
 
     def is_same_acc
-      if (@user.id == nil || session[:user_id] == nil || session[:user_id] != @user.id)
+      if (@user.id == nil || session[:user_id] == nil || session[:user_id] != params[:id].to_i)
         flash[:error] = "Unauthorized action!!"
-        redirect_to :usermain
-        #return false;
+        returnToUserMain
+        return false;
       else 
         return true
       end

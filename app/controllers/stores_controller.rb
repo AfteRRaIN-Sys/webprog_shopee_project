@@ -1,9 +1,14 @@
 class StoresController < ApplicationController
+
   before_action :is_logged_in, except: %i[new create]
   before_action :set_alt, except: %i[]
 
   before_action :set_store, only: %i[ show edit update destroy ]
   before_action :is_same_acc, only: %i[ edit update destroy ]
+
+  before_action :checkIsAdmin, only: %i[index]
+
+  
 
   # GET /stores or /stores.json
   def index
@@ -152,6 +157,16 @@ class StoresController < ApplicationController
 
     def set_alt
       session[:alt] = "store"
+    end
+
+    def checkIsAdmin
+      puts "------check admin"
+      if session[:store_id] == 2
+        return true
+      end
+      flash[:error] = "Unauthorized Action!!"
+      returnToStoreMain
+      return false
     end
 
     #end custom define --------------------------------------------

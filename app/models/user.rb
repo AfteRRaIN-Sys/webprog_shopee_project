@@ -100,4 +100,9 @@ class User < ApplicationRecord
 		b = self.bucket
 		b.clearBucket
 	end
+
+	def isAdmin
+      puts "------check admin"
+      return self.id == 1
+    end
 end

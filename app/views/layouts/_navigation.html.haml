@@ -26,8 +26,9 @@
 						%ul.dropdown-menu{"aria-labelledby" => "navbarDropdownMenuLink"}
 							%li
 								%a.dropdown-item{href: edit_user_path(session[:user_id])} Edit Profile
-							%li
-								%a.dropdown-item{href: users_path} Users
+							-if @user.isAdmin
+								%li
+									%a.dropdown-item{href: users_path} Users
 			%form.d-flex{action: "/search", method: "get"}
 				%input#fname.form-control.me-2{name: "name", type: "text"}
 				%button.btn.btn-outline-success{type: "submit"} Search
