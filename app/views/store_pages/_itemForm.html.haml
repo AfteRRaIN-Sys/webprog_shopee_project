@@ -1,5 +1,8 @@
 -# frozen_string_literal: true
-=simple_form_for(Item.new, as: :item, method: :post, url: :add_item) do |f|
+-url = "/edit_item"
+-if @item.id == nil
+  - url = "/add_item"
+=simple_form_for(@item, as: :item, method: :post, url: url) do |f|
   = f.error_notification
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
   .container
@@ -12,8 +15,12 @@
         = f.input :description
       .row
         = f.input :img_src, as: :string, label: "Image Source"
-      .row
-        = f.association :tags, as: :string
+      - if @item.id == nil
+        .row
+          = f.association :tags, as: :string
+
+      - if @item.id != nil
+        = f.hidden_field :item_id, type: "hidden", value: @item.id
 
     %br
     .form-actions

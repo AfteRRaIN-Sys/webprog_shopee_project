@@ -21,8 +21,8 @@
 				%td= i.name
 				%td= i.price
 				%td= c_store.getSold(i.id)
-				%td= 0
-				%td= 0
+				%td= link_to "Edit", "/edit_item/#{i.id}", class: "btn btn-outline-warning btn-sm"
+				%td= link_to "Delete", "/delete_item/#{i.id}", class: "btn btn-outline-danger btn-sm"
 
 
 

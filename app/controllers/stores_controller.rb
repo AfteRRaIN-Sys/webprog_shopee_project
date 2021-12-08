@@ -104,6 +104,51 @@ class StoresController < ApplicationController
 
   end
 
+  def editItem
+    @item = Item.find_by(id: params[:item_id].to_i)
+    if @item != nil
+      render "/store_pages/editItem"
+    else
+      returnToStoreMain
+    end
+  end
+
+  def checkEditItem
+    puts "------------#{params[:item]}"
+    tmp = params[:item]
+    @item = Item.find_by(id: tmp[:item_id].to_i)
+    if @item!=nil
+      @item.name = tmp[:name]
+      @item.price = tmp[:price]
+      @item.description = tmp[:description]
+      @item.img_src = tmp[:img_src]
+      if @item.save
+        flash[:success] = "Update Item successfully"
+      else
+        flash[:error] = "Update Item fail!!"
+      end
+    else
+      flash[:error] = "Update Item fail!!"
+    end
+    returnToStoreMain
+  end
+
+  def deleteItem
+    tid = params[:item_id].to_i
+    i = Item.find_by(id: tid)
+    if i.store_id == session[:store_id]
+        i.clearBeforeDelete
+        if i.delete != nil
+          flash[:success] = "Delete Item #{i.name} successfully!!"
+        else
+          flash[:error] = "Error Occurs after clear"    
+        end
+    else
+      flash[:error] = "You do not own this item or item does not exist!!"
+    end
+    returnToStoreMain
+  end
+
   #end custom define --------------------------------------------
 
   private
@@ -149,8 +194,8 @@ class StoresController < ApplicationController
       puts "-------------------------#{@store.id}"
       if (@store.id == nil || session[:store_id] == nil || session[:store_id] != params[:id])
         flash[:error] = "Unauthorized action!"
-        redirect_to :storemain
-        #return false;
+        returnToStoreMain
+        return false;
       else 
         return true
       end

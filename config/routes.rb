@@ -38,6 +38,11 @@ Rails.application.routes.draw do
   get "/add_item", to: "stores#addItem"
   post "/add_item", to: "stores#checkAddItem"
 
+  get "/edit_item/:item_id", to: "stores#editItem"
+  post "/edit_item", to: "stores#checkEditItem"
+
+  get "/delete_item/:item_id", to: "stores#deleteItem"
+
 
   # end stores -------------------------------------------------------------------------------
 end
