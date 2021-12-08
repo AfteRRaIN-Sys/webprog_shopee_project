@@ -60,6 +60,17 @@ class User < ApplicationRecord
 		
 	end
 
+	def getAllPrevOrder
+		table = User.connection.select_all("select * from (select O.user_id, O.id as order_id, OL.id as orderLine_id,\
+                                         ol.item_id, ol.quantity, ol.sold_price from \
+                                         (select u.id as user_id, o.id from users u INNER JOIN ORDERs O ON u.id = o.user_id and u.id = 1) as O \
+                                         INNER JOIN order_line_items OL ON OL.order_id = o.id) \
+                                         as o INNER JOIN \
+                                         (select s.id as store_id, i.id as item_id from stores s INNER JOIN items i ON i.store_id = s.id) \
+                                         as s ON o.item_id = s.item_id")
+    	return table
+	end
+
 	def createNewBucket
 		b = Bucket.new(user_id: self.id)
 		return b.save

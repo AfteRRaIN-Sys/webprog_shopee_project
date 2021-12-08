@@ -21,7 +21,9 @@ Rails.application.routes.draw do
 
   get "/confirmed_purchased", to: "users#confirmPurchase"
 
-  get "/showOrder", to: "users#showOrder"
+  get "/showOrders", to: "users#showOrders"
+
+  get "/showOrder/:order_id", to: "users#showOrder"
   
 
   #end users -------------------------------------------------------------------------------

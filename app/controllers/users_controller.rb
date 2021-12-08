@@ -140,6 +140,18 @@ class UsersController < ApplicationController
     returnToUserMain
   end
 
+  def showOrders
+    @table = @user.getAllPrevOrder
+    @table.each do |e|
+      puts "----------------each prev order #{e}"
+    end
+    returnToUserMain
+  end
+
+  def showOrder
+
+  end
+
   #end custom define ---------------------------------------------------------------------------------------
 
   private

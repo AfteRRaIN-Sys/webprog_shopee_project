@@ -27,6 +27,7 @@ class ApplicationController < ActionController::Base
 
 	    if (exist_user != false)
 	      flash[:success] = "Login Successfully"
+	      clearCookie
 	      session[:user_id] = exist_user.id
 	      @user = exist_user
 	      #puts "-----------------------------login as #{@user.name}"
@@ -62,6 +63,7 @@ class ApplicationController < ActionController::Base
 
 	    if (exist_store != false)
 	      flash[:success] = "Login Successfully"
+	      clearCookie
 	      session[:store_id] = exist_store.id
 	      @store = exist_store
 	      puts "-----------------------------login as #{@store.storeName}"

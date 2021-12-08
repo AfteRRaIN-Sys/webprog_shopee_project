@@ -84,7 +84,7 @@ class StoresController < ApplicationController
     if tmp != nil
       flash[:error] = "Your store are already selling this product!"
     else
-      @item = Item.new(store_id: getCurrentSID(), name: new_item_detail[:name].downcase, price: new_item_detail[:price], description: new_item_detail[:description])
+      @item = Item.new(store_id: getCurrentSID(), name: new_item_detail[:name].downcase, price: new_item_detail[:price], description: new_item_detail[:description], img_src: new_item_detail[:img_src])
       if @item.save
         res = @item.addItemTag(params[:item][:tag_ids])
         if res 

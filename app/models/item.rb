@@ -17,9 +17,10 @@ class Item < ApplicationRecord
   def addItemTag(tag_str)
     arr = tag_str.split(" ")
     arr.each do |tag|
+      tag = tag.downcase
       puts "---------tag #{tag}"
       if (tag!=nil && tag.length>0)
-        #tag already exists
+        #check tag already exists
         t = Tag.find_by(name: tag)
         if t == nil
           t = Tag.create(name: tag.downcase)

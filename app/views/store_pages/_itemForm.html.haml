@@ -11,7 +11,7 @@
       .row
         = f.input :description
       .row
-        = f.input :img_src
+        = f.input :img_src, as: :string, label: "Image Source"
       .row
         = f.association :tags, as: :string
 
