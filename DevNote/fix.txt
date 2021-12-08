@@ -1,0 +1,10 @@
+to fix
+to remove : bucket text, purchased_time: datetime
+
+to add : user img src, store edit item, store img src, datatable to showprviousOrders
+
+sort order bt store later
+
+array_of_objects.select { |favor| favor.completed == false }
+
+

@@ -1,0 +1,46 @@
+1 login and register for both user and store
+
+
+
+session[:user_id]
+session[:user_type]
+
+
+class_name
+
+porimorphic
+
+as: Setting the :as option indicates that this is a polymorphic association,
+
+inverse_of : specifies the name of the has_many or has_one association that is the inverse of this association.
+
+
+rails generate migration AddBucketToUser followers:text
+
+rails generate model bucket user:references
+
+rails generate model item store:references name:string price:float description:string
+
+rails generate model item_on_bucket item:references bucket:references quantity:integer
+
+rails generate model tag name:string
+
+rails generate model rating user:references store:references rate_score:integer comment:string
+
+rails generate model favorite user:references store:references
+
+rails generate model order user:references
+
+rails generate model favorite user:references store:references
+
+rails generate model order_on_line order:references item:references quantity:integer sold_price:float 
+rails generate model order_line_item order:references item:references quantity:integer sold_price:float
+
+    create_join_table :items, :buckets do |t|
+      t.index :item_id
+      t.index :bucket_id
+    end
+    
+    
+
+

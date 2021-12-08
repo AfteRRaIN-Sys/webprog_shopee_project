@@ -1,0 +1,89 @@
+Customer.find_by_sql(
+	"SELECT 
+	FROM customers INNER JOIN orders 
+	ON customers.id = orders.customer_id 
+	ORDER BY customers.created_at desc")
+	
+	
+ItemOnBucket(id: integer, item_id: integer, bucket_id: integer, quantity: integer, created_at: datetime, updated_at: datetime) 
+
+ItemOnBucket.find_by_sql(
+	"SELECT sum(Ib.quantity * i.price)
+	FROM item_on_buckets IB INNER JOIN items I
+	ON I.item_id = I.id
+	"	
+)
+
+ItemOnBucket.find_by_sql("SELECT sum(Ib.quantity * i.price) FROM item_on_buckets IB INNER JOIN items I ON Ib.item_id = I.id and Ib.bucket_id = 2")
+ItemOnBucket.find_by_sql("SELECT * FROM item_on_buckets IB INNER JOIN items I ON Ib.item_id = I.id and Ib.bucket_id = 2")
+ItemOnBucket.connection.select_all("SELECT * FROM item_on_buckets IB INNER JOIN items I ON Ib.item_id = I.id and Ib.bucket_id = 2")
+ItemOnBucket.connection.select_all("SELECT * FROM item_on_buckets IB INNER JOIN items I ON Ib.item_id = I.id and Ib.bucket_id = 2").pluck("quantity","price")
+
+ItemOnBucket.connection.select_all("SELECT sum(quantity*price) as total FROM item_on_buckets IB INNER JOIN items I ON Ib.item_id = I.id and Ib.bucket_id = 2")
+
+ItemOnBucket.connection.select_all("SELECT sum(quantity*price) as total FROM item_on_buckets IB INNER JOIN items I ON Ib.item_id = I.id and Ib.bucket_id = 2").pluck("total")
+
+
+
+Bucket.connection.select_all("select * from (item_on_buckets IB INNER JOIN items I ON Ib.item_id = I.id) as t1 INNER JOIN buckets b ON b.id = t1.bucket_id")
+
+Bucket.connection.select_all("select * from (item_on_buckets IB INNER JOIN items I ON Ib.item_id = I.id) as t1 INNER JOIN buckets b ON b.id = t1.bucket_id and b.id = 1")
+
+Bucket.connection.select_all("select * from (item_on_buckets IB INNER JOIN items I ON Ib.item_id = I.id) as t1 INNER JOIN buckets b ON b.id = t1.bucket_id and b.id = 1").pluck("item_id","price","t1.quantity")
+
+Bucket.connection.select_all("select t1.item_id, t1.price,t1.quantity from (item_on_buckets IB INNER JOIN items I ON Ib.item_id = I.id) as t1 INNER JOIN buckets b ON b.id = t1.bucket_id and b.id = #{self.id}")
+
+
+(stores S INNER JOIN items I ON S.id = I.store_id) INNER Join order_line_items OL ON OL.item_id = I.id
+
+((stores S INNER JOIN items I ON S.id = I.store_id) INNER Join order_line_items OL ON OL.item_id = I.id) INNER JOIN orders O ON O.id = OL.order_id
+
+(((stores S INNER JOIN items I ON S.id = I.store_id) INNER Join order_line_items OL ON OL.item_id = I.id) INNER JOIN orders O ON O.id = OL.order_id) INNER join users u ON u.id = O.user_id
+
+
+
+Item.connection.select_all("select * from (((stores S INNER JOIN items I ON S.id = I.store_id) INNER Join order_line_items OL ON OL.item_id = I.id) INNER JOIN orde
+rs O ON O.id = OL.order_id) INNER join users u ON u.id = O.user_id where u.id =1")
+
+select u.id as user_id, o.id as order_id from users u INNER JOIN ORDERs O ON u.id = o.user_id where u.id = 1
+
+
+select u.id as user_id, o.id from users u INNER JOIN ORDERs O ON u.id = o.user_id and u.id = 1
+select * from (select u.id as user_id, o.id from users u INNER JOIN ORDERs O ON u.id = o.user_id and u.id = 1) as O INNER JOIN order_line_items OL ON OL.order_id = o.id
+
+
+select O.user_id, O.id as order_id, OL.id as orderLine_id, ol.item_id, ol.quantity, ol.sold_price from (select u.id as user_id, o.id from users u INNER JOIN ORDERs O ON u.id = o.user_id and u.id = 1) as O INNER JOIN order_line_items OL ON OL.order_id = o.id
+
+result 
+
+@columns=["user_id", "order_id", "orderLine_id", "item_id", "quantity", "sold_price"],
+ @hash_rows=nil,
+ @rows=
+  [[1, 1, 1, 1, 1, 59.5],
+   [1, 9, 5, 14, 5, 999.0],
+   [1, 10, 6, 15, 5, 9990.0],
+   [1, 10, 7, 14, 10, 999.0],
+   [1, 11, 8, 15, 10, 9990.0],
+   [1, 12, 9, 19, 1, 999.0],
+   [1, 12, 10, 18, 1, 999.0],
+   [1, 12, 11, 17, 1, 999.0],
+   [1, 12, 12, 15, 3, 9990.0],
+   [1, 13, 13, 14, 1, 999.0]]> 
+
+select s.store_id as store_id, i.id as item_id from stores s INNER JOIN items i ON i.store_id = s.id
+
+("select * from (select O.user_id, O.id as order_id, O.purchased_time, OL.id as orderLine_id,\
+                                         ol.item_id, ol.quantity, ol.sold_price from \
+                                         (select u.id as user_id, o.id, o.created_at as purchased_time from users u INNER JOIN ORDERs O ON u.id = o.user_id and u.id = 1) as O \
+                                         INNER JOIN order_line_items OL ON OL.order_id = o.id) \
+                                         as o INNER JOIN \
+                                         (select s.id as store_id, i.id as item_id from stores s INNER JOIN items i ON i.store_id = s.id) \
+                                         as s ON o.item_id = s.item_id")
+
+
+User.connection.select_all("select * from (((users u INNER JOIN )))) where u.id = #{}")
+
+ItemOnBucket
+	.select('item.price')
+	.joins(:item)
+	.where(bucket_id: 2)

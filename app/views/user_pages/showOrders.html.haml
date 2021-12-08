@@ -1,0 +1,20 @@
+%h1 Show Previous Orders
+%table
+	%thead
+		%tr
+			%th Store Image
+			%th Store Name
+			%th Order ID
+			%th Purchased Time
+	%tbody
+		-@table.each do |e|
+			-s = Store.find(e["store_id"])
+			%tr
+				%td
+					%img.p-1{alt: "Image", height: "75", width: "75", src: ""}
+				%td
+					%a{href: "/visitStore/#{e["store_id"]}"}=s.storeName
+				%td= e["order_id"]
+				%td= e["purchased_time"]
+				%td
+					%a{href: "/showPrevOrder/#{e["order_id"]}"}More About This Order

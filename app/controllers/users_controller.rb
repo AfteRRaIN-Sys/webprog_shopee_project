@@ -142,10 +142,9 @@ class UsersController < ApplicationController
 
   def showOrders
     @table = @user.getAllPrevOrder
-    @table.each do |e|
-      puts "----------------each prev order #{e}"
-    end
-    returnToUserMain
+    @prevOrder = @table.pluck("store_id", "order_id").sort
+    #returnToUserMain
+    render "/user_pages/showOrders"
   end
 
   def showOrder
