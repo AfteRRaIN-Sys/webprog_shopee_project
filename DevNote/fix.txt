@@ -1,7 +1,7 @@
 to fix
-to remove : bucket text, purchased_time: datetime
+to remove : 
 
-to add : user img src, store edit item, store img src, datatable to showprviousOrders
+to add :  store edit item
 
 sort order bt store later
 
