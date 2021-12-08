@@ -1,0 +1,18 @@
+%h1= "Order \##{@order.id} From #{@store.storeName}"
+.container.p-2
+	#accordionExample.accordion
+		-@ols.each do |ol|
+			.accordion-item
+				%h2#headingOne.accordion-header
+					%button.accordion-button{"aria-controls" => "collapse#{ol.id}", "aria-expanded" => "true", "data-bs-target" => "#collapse#{ol.id}", "data-bs-toggle" => "collapse", :type => "button"}#{ol.item.name}
+				.accordion-collapse.collapse.show{id: "collapse#{ol.id}", "aria-labelledby" => "heading#{ol.id}", "data-bs-parent" => "#accordionExample"}
+					.accordion-body
+						%p
+							%strong= "Item Name : #{ol.item.name}"
+						%p
+							%strong= "Quantity : #{ol.quantity}"
+						%p
+							%strong= "Price : #{ol.sold_price}"
+
+
+	

@@ -17,10 +17,15 @@
 					%li.nav-item.active
 						%a.nav-link{href: "#{icon_link}"} Home
 						-#%a.nav-link.disabled{href: "#"} Disabled
+					%li.nav-item.active
+						%a.nav-link{href: "/showOrders"} Orders
+						-#%a.nav-link.disabled{href: "#"} Disabled
 					%li.nav-item.dropdown
 						%a#navbarDropdownMenuLink.nav-link.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", href: "#", role: "button"}
 							About User
 						%ul.dropdown-menu{"aria-labelledby" => "navbarDropdownMenuLink"}
+							%li
+								%a.dropdown-item{href: edit_user_path(session[:user_id])} Edit Profile
 							%li
 								%a.dropdown-item{href: users_path} Users
 			%form.d-flex{action: "/search", method: "get"}

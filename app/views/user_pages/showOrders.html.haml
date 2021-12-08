@@ -1,11 +1,12 @@
 %h1 Show Previous Orders
-%table
+%table#order_table{style: "width:100%", class: "table table-striped"}
 	%thead
 		%tr
 			%th Store Image
 			%th Store Name
 			%th Order ID
 			%th Purchased Time
+			%th			
 	%tbody
 		-@table.each do |e|
 			-s = Store.find(e["store_id"])
@@ -17,4 +18,11 @@
 				%td= e["order_id"]
 				%td= e["purchased_time"]
 				%td
-					%a{href: "/showPrevOrder/#{e["order_id"]}"}More About This Order
+					%a{href: "/showSpecificOrder/#{e["order_id"]}"}More About This Order
+
+
+:javascript
+	console.log("test")
+	$(document).ready( function () {
+		$('#order_table').DataTable();
+	} );

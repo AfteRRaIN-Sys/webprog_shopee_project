@@ -63,7 +63,7 @@ class User < ApplicationRecord
 	def getAllPrevOrder
 		table = User.connection.select_all("select * from (select O.user_id, O.id as order_id, O.purchased_time, OL.id as orderLine_id,\
                                          ol.item_id, ol.quantity, ol.sold_price from \
-                                         (select u.id as user_id, o.id, o.created_at as purchased_time from users u INNER JOIN ORDERs O ON u.id = o.user_id and u.id = 1) as O \
+                                         (select u.id as user_id, o.id, o.created_at as purchased_time from users u INNER JOIN ORDERs O ON u.id = o.user_id and u.id = #{self.id}) as O \
                                          INNER JOIN order_line_items OL ON OL.order_id = o.id) \
                                          as o INNER JOIN \
                                          (select s.id as store_id, i.id as item_id from stores s INNER JOIN items i ON i.store_id = s.id) \
@@ -74,12 +74,16 @@ class User < ApplicationRecord
 	def getAllPrevOrderLineItem
 		table = User.connection.select_all("select * from (select O.user_id, O.id as order_id, O.purchased_time, OL.id as orderLine_id,\
                                          ol.item_id, ol.quantity, ol.sold_price from \
-                                         (select u.id as user_id, o.id, o.created_at as purchased_time from users u INNER JOIN ORDERs O ON u.id = o.user_id and u.id = 1) as O \
+                                         (select u.id as user_id, o.id, o.created_at as purchased_time from users u INNER JOIN ORDERs O ON u.id = o.user_id and u.id = #{self.id}) as O \
                                          INNER JOIN order_line_items OL ON OL.order_id = o.id) \
                                          as o INNER JOIN \
                                          (select s.id as store_id, i.id as item_id from stores s INNER JOIN items i ON i.store_id = s.id) \
                                          as s ON o.item_id = s.item_id")
     	return table
+	end
+
+	def getOrder(order_id)
+		return self.orders.find_by(id: order_id)
 	end
 
 	def createNewBucket

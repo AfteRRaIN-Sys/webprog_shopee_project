@@ -3,7 +3,8 @@ class UsersController < ApplicationController
   before_action :is_logged_in, except: %i[create new]
   before_action :set_user, only: %i[ show edit update destroy ]
   before_action :set_alt, except: %i[]
-  before_action :is_same_acc, only: %i[edit update delete]
+  before_action :is_same_acc, only: %i[show edit update delete]
+  before_action :checkIsAdmin, only: %i[index]
   before_action :cancelPurchaseSession, except: %i[confirmPurchase]
 
   # GET /users or /users.json
@@ -147,8 +148,18 @@ class UsersController < ApplicationController
     render "/user_pages/showOrders"
   end
 
-  def showOrder
-
+  def showSpecificOrder
+    @order = @user.getOrder(params[:order_id].to_i)
+    if @order != nil
+      @ols = @order.order_line_items
+        if @ols != nil
+          @store = @ols[0].item.store
+          render "/user_pages/showSpecificOrder"
+          return
+        end
+    end
+    flash[:error] = "Order doesn't exist or Invalid Order"
+    redirect_to :showOrders
   end
 
   #end custom define ---------------------------------------------------------------------------------------
@@ -198,6 +209,17 @@ class UsersController < ApplicationController
 
     def returnToUserMain
       redirect_to :usermain
+    end
+
+    #addon-admin
+    def checkIsAdmin
+      puts "------check admin"
+      if session[:user_id] == 1
+        return true
+      end
+      flash[:error] = "Unauthorized Action!!"
+      returnToUserMain
+      return false
     end
     #end custom define --------------------------------------------
 end

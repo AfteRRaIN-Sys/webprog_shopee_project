@@ -23,7 +23,7 @@ Rails.application.routes.draw do
 
   get "/showOrders", to: "users#showOrders"
 
-  get "/showOrder/:order_id", to: "users#showOrder"
+  get "/showSpecificOrder/:order_id", to: "users#showSpecificOrder"
   
 
   #end users -------------------------------------------------------------------------------
