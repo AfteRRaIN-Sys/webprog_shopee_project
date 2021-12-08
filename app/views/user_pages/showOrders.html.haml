@@ -6,13 +6,13 @@
 			%th Store Name
 			%th Order ID
 			%th Purchased Time
-			%th			
+			%th
 	%tbody
 		-@table.each do |e|
 			-s = Store.find(e["store_id"])
 			%tr
 				%td
-					%img.p-1{alt: "Image", height: "75", width: "75", src: ""}
+					%img.p-1{alt: "Image", height: "75", width: "75", src: s.img_src}
 				%td
 					%a{href: "/visitStore/#{e["store_id"]}"}=s.storeName
 				%td= e["order_id"]

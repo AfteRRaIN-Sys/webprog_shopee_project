@@ -46,7 +46,10 @@
 							About Store
 						%ul.dropdown-menu{"aria-labelledby" => "navbarDropdownMenuLink"}
 							%li
-								%a.dropdown-item{href: stores_path} Stores
+								%a.dropdown-item{href: edit_store_path(session[:store_id])} Edit Profile
+							- if @store.isAdmin
+								%li
+									%a.dropdown-item{href: stores_path} Stores
 			.p-2
 				%a{href: "/storelogin"}
 					=button_tag "Logout", class: "btn btn-outline-danger"

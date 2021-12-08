@@ -26,4 +26,8 @@ class Store < ApplicationRecord
 		return quantity.sum
 	end
 
+	def isAdmin
+		return self.id == 2
+	end
+
 end

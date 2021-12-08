@@ -1,7 +1,7 @@
 - c_store = Store.find(session[:store_id])
 %h1{class: "fst-italic fs-1"}= "Welcome to Store Manager #{c_store.storeName}"
 
-%table{class: "table"}
+%table{id: "item_table", class: "table table-striped"}
 	%thead
 		%tr
 			%th Image
@@ -36,6 +36,11 @@
 
 
 :javascript
+
+	$(document).ready( function () {
+		$('#item_table').DataTable();
+	} );
+
 	$(".like_btn").click(function(){
 	
 		var str = $(this).attr("users");

@@ -10,13 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_06_083255) do
+ActiveRecord::Schema.define(version: 2021_12_08_125049) do
 
   create_table "buckets", force: :cascade do |t|
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.text "quantity"
     t.index ["user_id"], name: "index_buckets_on_user_id"
   end
 
@@ -81,7 +80,6 @@ ActiveRecord::Schema.define(version: 2021_12_06_083255) do
 
   create_table "orders", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.datetime "purchased_time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_orders_on_user_id"
@@ -104,6 +102,7 @@ ActiveRecord::Schema.define(version: 2021_12_06_083255) do
     t.string "address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "img_src"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -121,6 +120,7 @@ ActiveRecord::Schema.define(version: 2021_12_06_083255) do
     t.date "birthday"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "img_src"
   end
 
   add_foreign_key "buckets", "users"

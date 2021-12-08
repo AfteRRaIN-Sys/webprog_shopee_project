@@ -33,7 +33,8 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save && @user.createNewBucket
-        format.html { redirect_to @user, notice: "User was successfully created." }
+        flash[:success] = "User was successfully created."
+        format.html { redirect_to @user}
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -46,7 +47,8 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: "User was successfully updated." }
+        flash[:success] = "User was successfully updated."
+        format.html { redirect_to @user }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -59,7 +61,8 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: "User was successfully destroyed." }
+      flash[:success] = "User was successfully destroyed." 
+      format.html { redirect_to users_url}
       format.json { head :no_content }
     end
   end
@@ -176,7 +179,7 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:username, :password, :email, :name, :address, :phoneNo, :gender, :birthday)
+      params.require(:user).permit(:username, :password, :email, :name, :address, :phoneNo, :gender, :birthday, :img_src)
     end
 
     #custom define --------------------------------------------

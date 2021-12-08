@@ -3,12 +3,12 @@ class StoresController < ApplicationController
   before_action :is_logged_in, except: %i[new create]
   before_action :set_alt, except: %i[]
 
-  before_action :set_store, only: %i[ show edit update destroy ]
-  before_action :is_same_acc, only: %i[ edit update destroy ]
+  before_action :set_store, only: %i[main show edit update destroy ]
+  before_action :is_same_acc, only: %i[show edit update destroy ]
 
   before_action :checkIsAdmin, only: %i[index]
 
-  
+
 
   # GET /stores or /stores.json
   def index
@@ -117,12 +117,12 @@ class StoresController < ApplicationController
     end
 
     def set_store
-      @store = Store.find(params[:id])
+      @store = Store.find(session[:store_id])
     end
 
     # Only allow a list of trusted parameters through.
     def store_params
-      params.require(:store).permit(:storeName, :password, :address)
+      params.require(:store).permit(:storeName, :password, :address, :img_src)
     end
 
     #custom define --------------------------------------------
@@ -141,12 +141,13 @@ class StoresController < ApplicationController
         return true;
       else 
         redirect_to :storelogin, notice: "Please Login"
+        return false
       end
     end
 
     def is_same_acc
       puts "-------------------------#{@store.id}"
-      if (@store.id == nil || session[:store_id] == nil || session[:store_id] != @store.id)
+      if (@store.id == nil || session[:store_id] == nil || session[:store_id] != params[:id])
         flash[:error] = "Unauthorized action!"
         redirect_to :storemain
         #return false;
