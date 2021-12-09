@@ -1,5 +1,7 @@
 require "test_helper"
 
+#language DSL domain specific lang
+
 class StoresControllerTest < ActionDispatch::IntegrationTest
   setup do
     @store = stores(:one)

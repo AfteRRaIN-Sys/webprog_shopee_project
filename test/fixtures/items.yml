@@ -2,12 +2,28 @@
 
 one:
   store: one
-  name: MyString
-  price: 1.5
-  description: MyString
+  name: item1
+  price: 5
+  description: item1Desc
+  img_src: https://www.freeiconspng.com/uploads/item-configuration-icon-17.png
 
 two:
+  store: one
+  name: item2
+  price: 9995
+  description: item2Desc
+  img_src: https://www.freeiconspng.com/uploads/item-configuration-icon-17.png
+
+three:
   store: two
-  name: MyString
-  price: 1.5
-  description: MyString
+  name: item3
+  price: 990
+  description: item3Desc
+  img_src: https://www.freeiconspng.com/uploads/item-configuration-icon-17.png
+
+four:
+  store: two
+  name: item4
+  price: 10
+  description: item4Desc
+  img_src: https://www.freeiconspng.com/uploads/item-configuration-icon-17.png

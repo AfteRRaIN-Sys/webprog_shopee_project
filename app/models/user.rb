@@ -1,13 +1,36 @@
+class EmailValidator < ActiveModel::EachValidator
+  def validate_each(record, attribute, value)
+    unless value =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+      record.errors.add attribute, (options[:message] || "is not an email")
+    end
+  end
+end
+
+class GenderValidator < ActiveModel::EachValidator
+  def validate_each(record, attribute, value)
+    unless value.downcase == "male" || value.downcase == "female"
+      record.errors.add attribute, (options[:message] || "is invalid gender")
+    end
+  end
+end
+
 class User < ApplicationRecord
 
-	validates :email, presence: true, uniqueness: true
-	validates :username, presence: true, uniqueness: true
-	validates :name, presence: true, uniqueness: true
+	validates :email, presence: true, uniqueness: true, length: {minimum: 1}
+	#validates :email, presence: true, uniqueness: true, email: true
+	validates :username, presence: true, uniqueness: true, length: {minimum: 1}
+	validates :name, presence: true, uniqueness: true, length: {minimum: 1}
 	validates :password_digest, presence: true, length: {minimum: 1}
 	validates :address, presence: true, length: {minimum: 1}
-	validates :phoneNo, presence: true, uniqueness: true
-	validates :gender, presence: true
+	validates :phoneNo, presence: true, uniqueness: true, numericality: { only_integer: true }
+	validates :gender, presence: true, gender: true
 	#validates :birthday
+
+	#  validates :card_number, presence: true, if: :paid_with_card?
+
+	# def paid_with_card?
+  	#   payment_type == "card"
+  	# end
 
 	#association
 	has_one :bucket, dependent: :delete
@@ -23,6 +46,7 @@ class User < ApplicationRecord
 	#password
 	has_secure_password
 
+	#app method
 	def isAlreadyAdd(store_id)
     	f = Favorite.where(store_id: store_id, user_id: self.id).to_a
     	puts "------------------isAlreadyAdd #{f}"

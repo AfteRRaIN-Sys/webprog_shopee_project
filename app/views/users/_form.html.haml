@@ -20,7 +20,10 @@
     .row
       = f.input :gender
     .row
-      = f.input :birthday
+      = f.input :birthday,
+        start_year: Time.now.year - 100,
+        end_year: Time.now.year,
+        order: %i(day month year)
     .row
       = f.input :img_src, as: :string, label: "Image Source"
   %br

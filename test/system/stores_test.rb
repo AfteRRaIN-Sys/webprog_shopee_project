@@ -2,46 +2,38 @@ require "application_system_test_case"
 
 class StoresTest < ApplicationSystemTestCase
   setup do
-    @store = stores(:one)
+    @store1 = stores(:one)
+    @store2 = stores(:two)
   end
 
-  test "visiting the index" do
-    visit stores_url
-    assert_selector "h1", text: "Stores"
-  end
+  # test "register_login_success" do
+  #   visit "/stores/new"
+  #   fill_in "Storename", with: "testLogin1"
+  #   fill_in "Password", with: "12345"
+  #   fill_in "Address", with: "testLogin1Addr"
+  #   click_on "Create Store"
+  #   assert_text "Store was successfully created."
 
-  test "creating a Store" do
-    visit stores_url
-    click_on "New Store"
+  #   visit "/storelogin"
+  #   fill_in "Storename", with: "testLogin1"
+  #   fill_in "Password", with: "12345"
+  #   click_on "Login"
+  #   assert_text "Login Successfully"
+  # end
 
-    fill_in "Address", with: @store.address
-    fill_in "Password digest", with: @store.password_digest
-    fill_in "Storename", with: @store.storeName
-    click_on "Create Store"
-
-    assert_text "Store was successfully created"
-    click_on "Back"
-  end
-
-  test "updating a Store" do
-    visit stores_url
-    click_on "Edit", match: :first
-
-    fill_in "Address", with: @store.address
-    fill_in "Password digest", with: @store.password_digest
-    fill_in "Storename", with: @store.storeName
-    click_on "Update Store"
-
-    assert_text "Store was successfully updated"
-    click_on "Back"
-  end
-
-  test "destroying a Store" do
-    visit stores_url
-    page.accept_confirm do
-      click_on "Destroy", match: :first
-    end
-
-    assert_text "Store was successfully destroyed"
-  end
+  # test "store_login" do
+    
+  #   visit :storelogin
+  #   fill_in "Storename", with: @store1.storeName
+  #   fill_in "Password", with: "12345"
+  #   click_on "Login"
+  #   assert_text "Login Successfully"
+    
+  #   visit :storelogin
+  #   fill_in "Storename", with: @store1.storeName
+  #   fill_in "Password", with: "12345"
+  #   click_on "Login"
+  #   assert_text "Login Successfully"
+  # end
+  
 end

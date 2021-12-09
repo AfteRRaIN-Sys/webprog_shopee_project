@@ -1,0 +1,24 @@
+%h1 Show All Store
+%table#store_table{style: "width:100%", class: "table table-striped"}
+	%thead
+		%tr
+			%th Store Image
+			%th Store Name
+			%th Rating
+			%th Tags
+	%tbody
+		-Store.all.each do |s|
+			%tr
+				%td
+					%img.p-1{alt: "Image", height: "75", width: "75", src: s.img_src}
+				%td
+					%a{href: "/visitStore/#{s.id}"}=s.storeName
+				%td= s.getAvgRating	
+				%td= s.getAllTags
+
+
+:javascript
+	console.log("test")
+	$(document).ready( function () {
+		$('#store_table').DataTable();
+	} );

@@ -4,10 +4,22 @@ one:
   order: one
   item: one
   quantity: 1
-  sold_price: 1.5
+  sold_price: 1
 
 two:
-  order: two
+  order: one
   item: two
-  quantity: 1
-  sold_price: 1.5
+  quantity: 2
+  sold_price: 2
+
+three:
+  order: two
+  item: three
+  quantity: 3
+  sold_price: 3
+
+four:
+  order: two
+  item: four
+  quantity: 4
+  sold_price: 4

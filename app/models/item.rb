@@ -1,7 +1,15 @@
+class NameValidator < ActiveModel::EachValidator
+  def validate_each(record, attribute, value)
+    #unless value =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+    unless Store.find_by(id: store_id).items.find_by(name: value) == nil
+      record.errors.add attribute, (options[:message] || "is already selling in the shop!")
+    end
+  end
+end
+
 class Item < ApplicationRecord
   
-  #validate
-  name
+  #validatename addItem already check redundant item name
   validates :name, presence: true, length: {minimum: 1}
   validates :price, presence: true, numericality: {greater_than: 0}
 

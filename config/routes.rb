@@ -24,6 +24,12 @@ Rails.application.routes.draw do
   get "/showOrders", to: "users#showOrders"
 
   get "/showSpecificOrder/:order_id", to: "users#showSpecificOrder"
+
+  get "/search_store", to: "users#searchStoreByName"
+
+  get "/showAllStore", to: "users#showAllStore"
+
+  post "/giveRating", to: "users#giveRating"
   
 
   #end users -------------------------------------------------------------------------------

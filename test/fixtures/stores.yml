@@ -1,11 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  storeName: MyString
-  password_digest: MyString
-  address: MyString
+  storeName: testStore1
+  password_digest: <%=BCrypt::Password.create('12345')%>
+  address: testStore1Addr
+  img_src: https://findicons.com/files/icons/2718/pretty_office_icon_set_part_11/512/shop.png
 
 two:
-  storeName: MyString
-  password_digest: MyString
-  address: MyString
+  storeName: testStore2
+  password_digest: <%=BCrypt::Password.create('12345')%>
+  address: testStore2Addr
+  img_src: https://findicons.com/files/icons/2718/pretty_office_icon_set_part_11/512/shop.png

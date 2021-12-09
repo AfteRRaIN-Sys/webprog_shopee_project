@@ -118,7 +118,7 @@ class StoresController < ApplicationController
     tmp = params[:item]
     @item = Item.find_by(id: tmp[:item_id].to_i)
     if @item!=nil
-      @item.name = tmp[:name]
+      @item.name = tmp[:name].downcase
       @item.price = tmp[:price]
       @item.description = tmp[:description]
       @item.img_src = tmp[:img_src]
@@ -192,7 +192,9 @@ class StoresController < ApplicationController
 
     def is_same_acc
       puts "-------------------------#{@store.id}"
-      if (@store.id == nil || session[:store_id] == nil || session[:store_id] != params[:id])
+      puts "-------------------------#{session[:store_id]}"
+      puts "-------------------------#{params[:id]}"
+      if (@store.id == nil || session[:store_id] == nil || session[:store_id] != params[:id].to_i)
         flash[:error] = "Unauthorized action!"
         returnToStoreMain
         return false;

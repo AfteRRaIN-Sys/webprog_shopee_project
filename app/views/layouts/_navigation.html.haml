@@ -18,6 +18,8 @@
 						%a.nav-link{href: "#{icon_link}"} Home
 						-#%a.nav-link.disabled{href: "#"} Disabled
 					%li.nav-item.active
+						%a.nav-link{href: "/showAllStore"} Show All Stores
+					%li.nav-item.active
 						%a.nav-link{href: "/showOrders"} Orders
 						-#%a.nav-link.disabled{href: "#"} Disabled
 					%li.nav-item.dropdown
@@ -29,9 +31,9 @@
 							-if @user.isAdmin
 								%li
 									%a.dropdown-item{href: users_path} Users
-			%form.d-flex{action: "/search", method: "get"}
-				%input#fname.form-control.me-2{name: "name", type: "text"}
-				%button.btn.btn-outline-success{type: "submit"} Search
+			%form.d-flex{action: "/search_store", method: "get"}
+				%input#fname.form-control.me-2{name: "store_name", type: "text"}
+				%button.btn.btn-outline-success{type: "submit"} Store Search
 			.p-2
 				%a{href: "/userlogin"}
 					=button_tag "Logout", class: "btn btn-outline-danger"

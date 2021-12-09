@@ -1,0 +1,17 @@
+-# frozen_string_literal: true
+=simple_form_for(@rating, as: :rating, method: :post, url: "/giveRating") do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+  .container
+    .form-inputs
+      .row
+        = f.input :rate_score, as: :integer, label: "Rating Score (0-5)"
+      .row
+        = f.input :comment, as: :string, label: "Comment"
+        
+      = f.hidden_field :store_id, type: "hidden", value: @rating.store_id
+      = f.hidden_field :user_id, type: "hidden", value: @rating.user_id
+
+    %br
+    .form-actions
+      = f.button :submit, class: "btn btn-success", onclick: "return confirm('Please make sure rate score is between 0-5, Proceed?')"

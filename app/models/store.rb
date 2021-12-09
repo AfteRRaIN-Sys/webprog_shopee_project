@@ -35,4 +35,17 @@ class Store < ApplicationRecord
 		return self.id == 2
 	end
 
+	def getAllTags
+		items = self.items
+		arr = []
+		items.each do |item|
+			arr = arr + item.tags.pluck("name")
+		end
+		return arr.join(", ")
+		#s.items.tags.pluck("name").join(", ")
+	end
+
+	def getAvgRating
+		self.ratings.average("rate_score")
+	end
 end

@@ -3,11 +3,11 @@
 one:
   user: one
   store: one
-  rate_score: 1
-  comment: MyString
+  rate_score: 3
+  comment: rating1
 
 two:
   user: two
   store: two
-  rate_score: 1
-  comment: MyString
+  rate_score: 3
+  comment: rating2
