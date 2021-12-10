@@ -215,4 +215,27 @@ class UsersTest < ApplicationSystemTestCase
     assert_text "User was successfully updated"
   end
 
+  test "user_favorite_and_user_unfavorite" do
+    visit :userlogin
+    visit "/userlogin"
+    fill_in "Email", with: @user1.email
+    fill_in "Password", with: "12345"
+    click_on "Login"
+    assert_text "Login Successfully"
+
+    visit "visitStore/#{@store1.id}"
+    click_on "Delete from Favorite"
+    visit :usermain
+    assert_text "No data available in table"
+    visit "visitStore/#{@store1.id}"
+    click_on "Add To Favorite"
+    visit :usermain
+    l = @store1.items.length
+    show = l
+    if show > 10
+      show = 10
+    end
+    assert_text "Showing 1 to #{show} of #{l} entries"
+  end
+
 end
