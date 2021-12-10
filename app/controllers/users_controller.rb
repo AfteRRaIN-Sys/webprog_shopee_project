@@ -119,10 +119,16 @@ class UsersController < ApplicationController
 
   def purchase
     b = @user.bucket
-    @total = b.getTotalPayment
-    puts "-------------#{@total}"
-    setPurchaseSession
-    render "/user_pages/purchasePage"
+    if b.item_on_buckets.length > 0
+      @total = b.getTotalPayment
+      puts "-------------#{@total}"
+      setPurchaseSession
+      render "/user_pages/purchasePage"
+    else
+      flash[:error] = "Please add some items before purchase!!"
+      returnToUserMain 
+    end
+
   end
 
   def confirmPurchase
