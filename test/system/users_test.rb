@@ -205,7 +205,7 @@ class UsersTest < ApplicationSystemTestCase
 
     fill_in "Address", with: "xxx"
     fill_in "Email", with: @user1.email
-    fill_in "Gender", with: @user1.gender
+    fill_in "Gender", with: "male"
     fill_in "Name", with: @user1.name
     fill_in "Password", with: "123456"
     fill_in "Phoneno", with: @user1.phoneNo
@@ -213,6 +213,24 @@ class UsersTest < ApplicationSystemTestCase
     click_on "Update User"
 
     assert_text "User was successfully updated"
+  end
+
+  test "update wrong Gender" do
+    # visit users_url
+    # click_on "Edit", match: :first
+    visit :userlogin
+    visit "/userlogin"
+    fill_in "Email", with: @user1.email
+    fill_in "Password", with: "12345"
+    click_on "Login"
+    assert_text "Login Successfully"
+
+    visit "/users/#{@user1.id}/edit"
+
+    fill_in "Gender", with: "malemale"
+    click_on "Update User"
+
+    assert_text "Gender is invalid gender"
   end
 
   test "user_favorite_and_user_unfavorite" do
